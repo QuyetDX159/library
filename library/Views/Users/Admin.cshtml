@@ -1,0 +1,92 @@
+﻿@model IEnumerable<library.Models.Entities.User>
+
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<a href="@Url.Action("Logout", "Users")" class="btn btn-danger">Logout</a>
+
+<h1 style="text-align:center">List All staff</h1>
+<p style="text-align:right;padding-right: 100px;">
+    <a class="btn btn-primary" asp-action="Create">Add new</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                UserName
+            </th>
+            <th>
+                PassWork
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Full Name
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Role
+            </th>
+            <th>Option</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fullname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                    @{
+                        string roleText = "";
+                        if (item.IdRole == 1)
+                        {
+                            roleText = "Admin";
+                        }
+                        else if (item.IdRole == 2)
+                        {
+                            roleText = "User";
+                        }
+                        else if(item.IdRole == 3)
+                        {
+                            roleText = "magage";
+                        }else
+                        {
+                            roleText = "null";
+                        }
+                    }
+                @Html.DisplayFor(modelItem => roleText)
+            </td>
+            <td>
+                <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.IdU">Edit</a> |
+                <a class="btn btn-success" asp-action="Details" asp-route-id="@item.IdU">Details</a> |
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdU">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
