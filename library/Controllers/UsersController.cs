@@ -9,7 +9,10 @@ using library.Models.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+<<<<<<< HEAD
 using System.Security.Claims;
+=======
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
 
 namespace library.Controllers
 {
@@ -31,6 +34,7 @@ namespace library.Controllers
         // GET: Users
         public async Task<IActionResult> Admin()
         {
+<<<<<<< HEAD
             // Kiểm tra xem người dùng đã đăng nhập hay chưa
             if (HttpContext.Session == null || HttpContext.Session.GetInt32("IdRole") != 1)
             {
@@ -40,6 +44,8 @@ namespace library.Controllers
 
                 return RedirectToAction("Login");
             }
+=======
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
             return _context.Users != null ?
                         View(await _context.Users.ToListAsync()) :
                         Problem("Entity set 'LibraryContext.Users'  is null.");
@@ -74,6 +80,7 @@ namespace library.Controllers
         {
             return View();
         }
+<<<<<<< HEAD
         public IActionResult Register()
         {
             return View();
@@ -99,21 +106,52 @@ namespace library.Controllers
 
 
                 return RedirectToAction("Admin");
+=======
+
+        [HttpPost]
+       
+        public async Task<IActionResult> Login(string username, string password)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+            if(user == null)
+            {
+                ModelState.AddModelError("", "sai tài khoản hoặc mật khẩu");
+                return View();
+            }
+            if((int)user.IdRole == 1)
+            {
+                // Lưu thông tin người dùng vào session
+                HttpContext.Session.SetString("Username",user.Username);
+                HttpContext.Session.SetInt32("IdRole", (int)user.IdRole);
+
+                return RedirectToAction("Users","Admin");
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
             }
             else if ((int)user.IdRole == 2)
             {
                 // Lưu thông tin người dùng vào session
+<<<<<<< HEAD
                 HttpContext.Session.SetString("Username", user.Username);
+=======
+                HttpContext.Session.SetString("Username",user.Username);
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
                 HttpContext.Session.SetInt32("IdRole", (int)user.IdRole);
 
                 return RedirectToAction("Home");
             }
             else if ((int)user.IdRole == 3)
             {
+<<<<<<< HEAD
                 ModelState.AddModelError("", "chưa có loại quyền này");
                 return View();
             }
             
+=======
+                ModelState.AddModelError("", "Tài khoản không tồn tại.");
+                return View();
+            }
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
 
             return View();
         }
@@ -143,6 +181,7 @@ namespace library.Controllers
             {
                 _context.Add(user);
                 await _context.SaveChangesAsync();
+<<<<<<< HEAD
                 return RedirectToAction(nameof(Admin));
             }
             return View(user);
@@ -173,6 +212,9 @@ namespace library.Controllers
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Login));
+=======
+                return RedirectToAction(nameof(Index));
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
             }
             return View(user);
         }
@@ -223,7 +265,11 @@ namespace library.Controllers
                         throw;
                     }
                 }
+<<<<<<< HEAD
                 return RedirectToAction(nameof(Admin));
+=======
+                return RedirectToAction(nameof(Index));
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
             }
             return View(user);
         }
@@ -262,7 +308,11 @@ namespace library.Controllers
             }
 
             await _context.SaveChangesAsync();
+<<<<<<< HEAD
             return RedirectToAction(nameof(Admin));
+=======
+            return RedirectToAction(nameof(Index));
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
         }
 
         private bool UserExists(int id)

@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 ﻿@using Microsoft.AspNetCore.Http
 @using Microsoft.EntityFrameworkCore;
 @{
     var ten = Context.Session.GetString("Username");
 }
 <!DOCTYPE html>
+=======
+﻿<!DOCTYPE html>
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,8 +16,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/library.styles.css" asp-append-version="true" />
+<<<<<<< HEAD
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
 
+=======
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
 </head>
 <body>
     <header>
@@ -27,11 +34,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
+<<<<<<< HEAD
                             <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Admin">Users</a>
+=======
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index">Book</a>
                         </li>
+<<<<<<< HEAD
                     </ul>
                     
                     <form class="d-flex">
@@ -40,6 +52,10 @@
                         </div>
                         <a class="btn btn-outline-danger" href="@Url.Action("Logout", "Users")" type="submit">Logout</a>
                     </form>
+=======
+                        
+                    </ul>
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
                 </div>
             </div>
         </nav>
@@ -59,7 +75,10 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+<<<<<<< HEAD
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+=======
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
 </body>
 </html>

@@ -3,7 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -14,13 +17,18 @@ builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(option =>
     {
+<<<<<<< HEAD
         option.LoginPath = "/Users/Login";
+=======
+        option.LoginPath = "/Access/Login";
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
         option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
 
 builder.Services.AddDbContext<LibraryContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ContextCore")));
 
+<<<<<<< HEAD
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
@@ -30,6 +38,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+=======
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
 
 var app = builder.Build();
 
@@ -45,7 +55,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+<<<<<<< HEAD
 app.UseSession();
+=======
+
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
 app.UseAuthentication();
 app.UseCookiePolicy();
 app.UseAuthorization();

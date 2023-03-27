@@ -114,6 +114,7 @@ public partial class LibraryContext : DbContext
             entity.Property(e => e.Fullname)
                 .HasMaxLength(50)
                 .HasColumnName("fullname");
+<<<<<<< HEAD
             entity.Property(e => e.IdRole).HasColumnName("id_role"); 
             entity.Property(e => e.Password)
                 .HasMaxLength(50)
@@ -121,6 +122,12 @@ public partial class LibraryContext : DbContext
             entity.Property(e => e.ConfirmPassword)
                 .HasMaxLength(50)
                 .HasColumnName("confirmPassword");
+=======
+            entity.Property(e => e.IdRole).HasColumnName("id_role");
+            entity.Property(e => e.Password)
+                .HasMaxLength(50)
+                .HasColumnName("password");
+>>>>>>> f87de6b070b981742c3402a2b4c6ea9765cc3ee7
             entity.Property(e => e.Phone)
                 .HasMaxLength(12)
                 .HasColumnName("phone");
