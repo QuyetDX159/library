@@ -9,6 +9,7 @@ using library.Models.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace library.Controllers
 {
@@ -30,6 +31,15 @@ namespace library.Controllers
         // GET: Users
         public async Task<IActionResult> Admin()
         {
+            // Kiểm tra xem người dùng đã đăng nhập hay chưa
+            if (HttpContext.Session == null || HttpContext.Session.GetInt32("IdRole") != 1)
+            {
+                TempData["Message"] = "Bạn cần đăng nhập tài khoản admin trước mới có thể vào trang này";
+                TempData["MessageType"] = "danger";
+                
+
+                return RedirectToAction("Login");
+            }
             return _context.Users != null ?
                         View(await _context.Users.ToListAsync()) :
                         Problem("Entity set 'LibraryContext.Users'  is null.");
@@ -64,39 +74,46 @@ namespace library.Controllers
         {
             return View();
         }
+        public IActionResult Register()
+        {
+            return View();
+        }
 
         [HttpPost]
-       
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login(string username, string password, string fullname)
         {
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
-            if(user == null)
+
+
+            if (user == null)
             {
-                ModelState.AddModelError("", "sai tài khoản hoặc mật khẩu");
+                ViewData["ValidateMessage"] = "tài khoản không tồn tại";
                 return View();
             }
-            if((int)user.IdRole == 1)
+            if ((int)user.IdRole == 1)
             {
                 // Lưu thông tin người dùng vào session
-                HttpContext.Session.SetString("Username",user.Username);
+                HttpContext.Session.SetString("Username", user.Username);
                 HttpContext.Session.SetInt32("IdRole", (int)user.IdRole);
 
-                return RedirectToAction("Users","Admin");
+
+                return RedirectToAction("Admin");
             }
             else if ((int)user.IdRole == 2)
             {
                 // Lưu thông tin người dùng vào session
-                HttpContext.Session.SetString("Username",user.Username);
+                HttpContext.Session.SetString("Username", user.Username);
                 HttpContext.Session.SetInt32("IdRole", (int)user.IdRole);
 
                 return RedirectToAction("Home");
             }
             else if ((int)user.IdRole == 3)
             {
-                ModelState.AddModelError("", "Tài khoản không tồn tại.");
+                ModelState.AddModelError("", "chưa có loại quyền này");
                 return View();
             }
+            
 
             return View();
         }
@@ -126,7 +143,36 @@ namespace library.Controllers
             {
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Admin));
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([Bind("IdU,Username,Password,ConfirmPassword,Email,Fullname,Phone,Address,IdRole")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                // Check if username already exists
+                if (await _context.Users.AnyAsync(u => u.Username == user.Username))
+                {
+                    ModelState.AddModelError("Username", "Username already exists");
+                    return View(user);
+                }
+
+                // Check if email already exists
+                if (await _context.Users.AnyAsync(u => u.Email == user.Email))
+                {
+                    ModelState.AddModelError("Email", "Email already exists");
+                    return View(user);
+                }
+
+                // Add new user to database
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Login));
             }
             return View(user);
         }
@@ -177,7 +223,7 @@ namespace library.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Admin));
             }
             return View(user);
         }
@@ -216,7 +262,7 @@ namespace library.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Admin));
         }
 
         private bool UserExists(int id)

@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Microsoft.Build.Framework;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace library.Models.Entities;
 
 public partial class User
 {
     public int IdU { get; set; }
-
     public string? Username { get; set; }
-
     public string? Password { get; set; }
+    public string? ConfirmPassword { get; set; }
 
     public string? Email { get; set; }
 
